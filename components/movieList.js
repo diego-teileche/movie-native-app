@@ -4,10 +4,14 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	TouchableWithoutFeedback,
+	Dimensions,
+	Image,
 } from "react-native"
 import React from "react"
 import { styles } from "../themes/index"
 import { useNavigation } from "@react-navigation/native"
+
+var { width, height } = Dimensions.get("window")
 
 export default function MovieList({ title, data }) {
 	let movieName = "Aguante Diegooooooooooooooooooooooo"
@@ -35,7 +39,18 @@ export default function MovieList({ title, data }) {
 							key={index}
 							onPress={() => navigation.navigate("Movie", item)}
 						>
-							<Text className="text-neutral-300 ml-1">{movieName}</Text>
+							<View className="space-y-1 mr-4">
+								<Image
+									source={require("../assets/images/girl.jpeg")}
+									className="rounded-3xl"
+									style={{ width: width * 0.33, height: height * 0.22 }}
+								/>
+								<Text className="text-neutral-300 ml-1">
+									{movieName.length > 14
+										? movieName.slice(0, 14) + "..."
+										: movieName}
+								</Text>
+							</View>
 						</TouchableWithoutFeedback>
 					)
 				})}
