@@ -20,6 +20,7 @@ const ios = Platform.OS == "ios"
 const topMargin = ios ? "" : "mt-3"
 
 export default function MovieScreen() {
+	const movieName = "Aguante Diegooooooooooooooo"
 	const { params: item } = useRoute()
 	const navigation = useNavigation()
 	const [isFavorite, setIsFavorite] = useState(false)
@@ -72,6 +73,38 @@ export default function MovieScreen() {
 						className="absolute bottom-0"
 					/>
 				</View>
+			</View>
+
+			<View className="space-y-3" style={{ marginTop: -(height * 0.09) }}>
+				<Text className="text-white text-center text-3xl font-bold tracking-wider">
+					{movieName}
+				</Text>
+				<Text className="text-neutral-400 font-semibold text-base text-center">
+					Released - 2020 - 170 min
+				</Text>
+
+				<View className="flex-row justify-center mx-4 space-x-2">
+					<Text className="text-neutral-400 font-semibold text-base text-center">
+						Action -
+					</Text>
+					<Text className="text-neutral-400 font-semibold text-base text-center">
+						Thrill -
+					</Text>
+					<Text className="text-neutral-400 font-semibold text-base text-center">
+						Comedy -
+					</Text>
+				</View>
+
+				<Text
+					className="text-black font-semibold mx-4 tracking-wide p-2 rounded-lg"
+					style={styles.background}
+				>
+					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam
+					eveniet, similique eligendi voluptate nemo natus, temporibus
+					consequatur tempore voluptatem error molestiae assumenda repellendus
+					illo quasi ratione sit tempora ut mollitia possimus vel quas labore
+					neque nulla. Nihil laboriosam deserunt magni.
+				</Text>
 			</View>
 		</ScrollView>
 	)
