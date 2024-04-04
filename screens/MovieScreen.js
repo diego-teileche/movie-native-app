@@ -15,6 +15,7 @@ import { HeartIcon } from "react-native-heroicons/solid"
 import { styles, theme } from "../themes/index"
 import { LinearGradient } from "expo-linear-gradient"
 import Cast from "../components/Cast"
+import MovieList from "../components/movieList"
 
 var { width, height } = Dimensions.get("window")
 const ios = Platform.OS == "ios"
@@ -26,6 +27,7 @@ export default function MovieScreen() {
 	const navigation = useNavigation()
 	const [isFavorite, setIsFavorite] = useState(false)
 	const [cast, setCast] = useState([1, 2, 3, 4, 5])
+	const [similarMovies, setSimilarMovies] = useState([1, 2, 3, 4, 5])
 
 	useEffect(() => {}, [item])
 
@@ -98,8 +100,8 @@ export default function MovieScreen() {
 				</View>
 
 				<Text
-					className="text-black font-semibold mx-4 tracking-wide p-2 rounded-lg"
-					style={styles.background}
+					className="text-neutral-400 font-semibold mx-4 tracking-wide p-2 rounded-lg border"
+					style={styles.border}
 				>
 					Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam
 					eveniet, similique eligendi voluptate nemo natus, temporibus
@@ -110,6 +112,12 @@ export default function MovieScreen() {
 			</View>
 
 			<Cast navigation={navigation} cast={cast} />
+
+			<MovieList
+				title="Similar Movies"
+				data={similarMovies}
+				hideSeeAll={true}
+			/>
 		</ScrollView>
 	)
 }

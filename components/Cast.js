@@ -21,10 +21,10 @@ export default function Cast({ cast, navigation }) {
 								className="mr-4 items-center"
 								onPress={() => navigation.navigate("Person", person)}
 							>
-								<View className="overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-600">
+								<View className="overflow-hidden rounded-full h-20 w-20 items-center border border-neutral-600 mb-2">
 									<Image
 										source={require("../assets/images/girl.jpeg")}
-										className="rounded-2xl h-24 w-20 mb-2"
+										className="rounded-2xl h-24 w-20"
 									/>
 								</View>
 
