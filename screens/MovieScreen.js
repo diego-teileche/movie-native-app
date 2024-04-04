@@ -14,6 +14,7 @@ import { ChevronLeftIcon } from "react-native-heroicons/outline"
 import { HeartIcon } from "react-native-heroicons/solid"
 import { styles, theme } from "../themes/index"
 import { LinearGradient } from "expo-linear-gradient"
+import Cast from "../components/Cast"
 
 var { width, height } = Dimensions.get("window")
 const ios = Platform.OS == "ios"
@@ -24,6 +25,7 @@ export default function MovieScreen() {
 	const { params: item } = useRoute()
 	const navigation = useNavigation()
 	const [isFavorite, setIsFavorite] = useState(false)
+	const [cast, setCast] = useState([1, 2, 3, 4, 5])
 
 	useEffect(() => {}, [item])
 
@@ -91,7 +93,7 @@ export default function MovieScreen() {
 						Thrill -
 					</Text>
 					<Text className="text-neutral-400 font-semibold text-base text-center">
-						Comedy -
+						Comedy
 					</Text>
 				</View>
 
@@ -106,6 +108,8 @@ export default function MovieScreen() {
 					neque nulla. Nihil laboriosam deserunt magni.
 				</Text>
 			</View>
+
+			<Cast navigation={navigation} cast={cast} />
 		</ScrollView>
 	)
 }
