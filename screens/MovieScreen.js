@@ -17,6 +17,7 @@ import { styles, theme } from "../themes/index"
 import { LinearGradient } from "expo-linear-gradient"
 import Cast from "../components/Cast"
 import MovieList from "../components/movieList"
+import Loading from "../components/Loading"
 
 var { width, height } = Dimensions.get("window")
 const ios = Platform.OS == "ios"
@@ -29,6 +30,7 @@ export default function MovieScreen() {
 	const [isFavorite, setIsFavorite] = useState(false)
 	const [cast, setCast] = useState([1, 2, 3, 4, 5])
 	const [similarMovies, setSimilarMovies] = useState([1, 2, 3, 4, 5])
+	const [loading, setLoading] = useState(false)
 
 	useEffect(() => {}, [item])
 
@@ -66,24 +68,28 @@ export default function MovieScreen() {
 					</TouchableOpacity>
 				</SafeAreaView>
 
-				<View>
-					<Image
-						source={require("../assets/images/girl.jpeg")}
-						style={{ width, height: height * 0.55 }}
-					/>
+				{loading ? (
+					<Loading />
+				) : (
+					<View>
+						<Image
+							source={require("../assets/images/girl.jpeg")}
+							style={{ width, height: height * 0.55 }}
+						/>
 
-					<LinearGradient
-						colors={[
-							"transparent",
-							"rgba(23, 23, 23, 0.8)",
-							"rgba(23, 23, 23, 1)",
-						]}
-						style={{ width, height: height * 0.4 }}
-						start={{ x: 0.5, y: 0 }}
-						end={{ x: 0.5, y: 1 }}
-						className="absolute bottom-0"
-					/>
-				</View>
+						<LinearGradient
+							colors={[
+								"transparent",
+								"rgba(23, 23, 23, 0.8)",
+								"rgba(23, 23, 23, 1)",
+							]}
+							style={{ width, height: height * 0.4 }}
+							start={{ x: 0.5, y: 0 }}
+							end={{ x: 0.5, y: 1 }}
+							className="absolute bottom-0"
+						/>
+					</View>
+				)}
 			</View>
 
 			<View className="space-y-3" style={{ marginTop: -(height * 0.09) }}>
