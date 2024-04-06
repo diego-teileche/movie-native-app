@@ -6,7 +6,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import {
 	Bars3CenterLeftIcon,
@@ -17,6 +17,11 @@ import { useNavigation } from "@react-navigation/native"
 import TrendingMovies from "../components/trendingMovies"
 import MovieList from "../components/movieList"
 import Loading from "../components/Loading"
+import {
+	fetchTopRatedMovies,
+	fetchTrendingMovies,
+	fetchUpcomingMovies,
+} from "../api/moviedb"
 
 const ios = Platform.OS == "ios"
 
@@ -25,7 +30,30 @@ export default function HomeScreen() {
 	const [upcoming, setUpcoming] = useState([1, 2, 3])
 	const [topRated, setTopRated] = useState([1, 2, 3])
 	const navigation = useNavigation()
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(true)
+
+	useEffect(() => {
+		getTrendingMovies()
+		getUpcomingMovies()
+		getTopRatedMovies()
+	}, [])
+
+	const getTrendingMovies = async () => {
+		const data = await fetchTrendingMovies()
+		if (data && data.results) setTrending(data.results)
+		setLoading(false)
+	}
+
+	const getUpcomingMovies = async () => {
+		const data = await fetchUpcomingMovies()
+		if (data && data.results) setUpcoming(data.results)
+	}
+
+	const getTopRatedMovies = async () => {
+		const data = await fetchTopRatedMovies()
+		if (data && data.results) setTopRated(data.results)
+		setLoading(false)
+	}
 
 	return (
 		<View className="flex-1 bg-neutral-800">
@@ -56,7 +84,7 @@ export default function HomeScreen() {
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={{ paddingBottom: 10 }}
 				>
-					<TrendingMovies data={trending} />
+					{trending.length > 0 && <TrendingMovies data={trending} />}
 
 					<MovieList title="Upcoming" data={upcoming} />
 

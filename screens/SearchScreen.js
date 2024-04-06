@@ -17,8 +17,6 @@ import { useNavigation } from "@react-navigation/native"
 import Loading from "../components/Loading"
 
 var { width, height } = Dimensions.get("window")
-/* const ios = Platform.OS == "ios"
-const topMargin = ios ? "" : " mt-3" */
 
 export default function SearchScreen() {
 	const navigation = useNavigation()
@@ -27,7 +25,7 @@ export default function SearchScreen() {
 	let movieName = "Diegoooooooooooooooooooooo"
 
 	return (
-		<SafeAreaView className={"bg-neutral-800 flex-1" /* + topMargin */}>
+		<SafeAreaView className="bg-neutral-800 flex-1">
 			<StatusBar
 				translucent={true}
 				backgroundColor={"transparent"}
