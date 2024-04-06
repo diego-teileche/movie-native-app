@@ -6,6 +6,7 @@ import {
 	Dimensions,
 	Platform,
 	Image,
+	StatusBar,
 } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import React, { useEffect, useState } from "react"
@@ -36,6 +37,12 @@ export default function MovieScreen() {
 			contentContainerStyle={{ paddingBottom: 20 }}
 			className="flex-1 bg-neutral-900"
 		>
+			<StatusBar
+				translucent={true}
+				backgroundColor={"transparent"}
+				barStyle={"light-content"}
+			/>
+
 			<View className="w-full">
 				<SafeAreaView
 					className={
