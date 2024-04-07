@@ -155,7 +155,11 @@ export default function PersonScreen() {
 						</Text>
 					</View>
 
-					<MovieList title="Movies" hideSeeAll={true} data={personMovies} />
+					<MovieList
+						title={`Movies of ${person?.name}`}
+						hideSeeAll={true}
+						data={personMovies}
+					/>
 				</View>
 			)}
 		</ScrollView>
