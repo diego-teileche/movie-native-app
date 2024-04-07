@@ -7,25 +7,50 @@ import {
 	TouchableOpacity,
 	Image,
 } from "react-native"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { ChevronLeftIcon } from "react-native-heroicons/outline"
 import { HeartIcon } from "react-native-heroicons/solid"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { styles, theme } from "../themes"
 import { Shadow } from "react-native-shadow-2"
 import MovieList from "../components/movieList"
 import Loading from "../components/Loading"
+import {
+	fallbackMoviePoster,
+	fetchPersonDetails,
+	fetchPersonMovies,
+	image342,
+} from "../api/moviedb"
 
 var { width, height } = Dimensions.get("window")
 const ios = Platform.OS == "ios"
 const verticalMargin = ios ? "" : " my-3"
 
 export default function PersonScreen() {
+	const { params: item } = useRoute()
 	const navigation = useNavigation()
 	const [isFavorite, setIsFavorite] = useState(false)
-	const [personMovies, setPersonMovies] = useState([1, 2, 3, 4, 5])
+	const [personMovies, setPersonMovies] = useState([])
+	const [person, setPerson] = useState({})
 	const [loading, setLoading] = useState(false)
+
+	useEffect(() => {
+		setLoading(true)
+		getPersonDetails(item.id)
+		getPersonMovies(item.id)
+	}, [item])
+
+	const getPersonDetails = async (id) => {
+		const data = await fetchPersonDetails(id)
+		setPerson(data)
+		setLoading(false)
+	}
+
+	const getPersonMovies = async (id) => {
+		const data = await fetchPersonMovies(id)
+		if (data && data.cast) setPersonMovies(data.cast)
+	}
 
 	return (
 		<ScrollView className="flex-1 bg-neutral-900">
@@ -75,7 +100,9 @@ export default function PersonScreen() {
 								}}
 							>
 								<Image
-									source={require("../assets/images/girl.jpeg")}
+									source={{
+										uri: image342(person?.profile_path) || fallbackMoviePoster,
+									}}
 									style={{ height: height * 0.43, width: width * 0.74 }}
 								/>
 							</View>
@@ -84,29 +111,37 @@ export default function PersonScreen() {
 
 					<View className="mt-4">
 						<Text className="text-3xl text-white font-bold text-center">
-							Pretty Girl
+							{person?.name}
 						</Text>
 						<Text className="text-base text-neutral-500 font-bold text-center">
-							London, United Kingdom
+							{person?.place_of_birth}
 						</Text>
 					</View>
 
 					<View className="mx-3 mt-6 p-4 flex-row justify-between items-center bg-neutral-700 rounded-full">
 						<View className="border-r-2 border-r-neutral-400 px-2 items-center">
 							<Text className="text-white font-semibold pr-1">Gender</Text>
-							<Text className="text-neutral-300 font-sm pr-1">Female</Text>
+							<Text className="text-neutral-300 font-sm pr-1">
+								{person?.gender == 1 ? "Female" : "Male"}
+							</Text>
 						</View>
 						<View className="border-r-2 border-r-neutral-400 px-2 items-center">
 							<Text className="text-white font-semibold pr-1">Birthday</Text>
-							<Text className="text-neutral-300 font-sm pr-1">1997/11/26</Text>
+							<Text className="text-neutral-300 font-sm pr-1">
+								{person?.birthday}
+							</Text>
 						</View>
 						<View className="border-r-2 border-r-neutral-400 px-2 items-center">
 							<Text className="text-white font-semibold pr-1">Known for</Text>
-							<Text className="text-neutral-300 font-sm pr-1">Acting</Text>
+							<Text className="text-neutral-300 font-sm pr-1">
+								{person?.known_for_department}
+							</Text>
 						</View>
 						<View className="px-2 items-center">
 							<Text className="text-white font-semibold pr-1">Populaty</Text>
-							<Text className="text-neutral-300 font-sm pr-1">75.97</Text>
+							<Text className="text-neutral-300 font-sm pr-1">
+								{person?.popularity?.toFixed(2)} %
+							</Text>
 						</View>
 					</View>
 
@@ -116,16 +151,7 @@ export default function PersonScreen() {
 							className="text-neutral-400 tracking-wide px-2 py-1 rounded-lg border"
 							style={styles.border}
 						>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit.
-							Repudiandae ratione odit sequi, quaerat illum doloremque quam
-							earum eum sunt cum vel iste neque dolorem. Voluptatum maiores
-							temporibus quod natus? Quaerat adipisci sit doloremque eveniet
-							obcaecati animi fugit. Ex perspiciatis voluptatibus non eos autem.
-							Dolore fugiat blanditiis ipsa iure sit delectus, quo non quos
-							repudiandae corrupti possimus exercitationem omnis perspiciatis
-							nihil ratione doloremque provident obcaecati perferendis veniam
-							facilis laboriosam. Reiciendis esse cum temporibus rerum ipsam
-							blanditiis! Sed inventore ut alias non.
+							{person?.biography || "N/A"}
 						</Text>
 					</View>
 

@@ -1,6 +1,8 @@
 import axios from "axios"
 import { apiKey } from "../constants/index"
 
+// Endpoints
+
 const apiBaseURL = "https://api.themoviedb.org/3"
 
 const trendingMoviesEndpoint = `${apiBaseURL}/trending/movie/day?api_key=${apiKey}`
@@ -8,6 +10,8 @@ const trendingMoviesEndpoint = `${apiBaseURL}/trending/movie/day?api_key=${apiKe
 const upcomingMoviesEndpoint = `${apiBaseURL}/movie/upcoming?api_key=${apiKey}`
 
 const topRatedMoviesEndpoint = `${apiBaseURL}/movie/top_rated?api_key=${apiKey}`
+
+// Dynamic Endpoints
 
 const movieDetailsEndpoint = (id) =>
 	`${apiBaseURL}/movie/${id}?api_key=${apiKey}`
@@ -17,6 +21,12 @@ const movieCreditsEndpoint = (id) =>
 
 const similarMoviesEndpoint = (id) =>
 	`${apiBaseURL}/movie/${id}/similar?api_key=${apiKey}`
+
+const personDetailsEndpoint = (id) =>
+	`${apiBaseURL}/person/${id}?api_key=${apiKey}`
+
+const personMoviesEndpoint = (id) =>
+	`${apiBaseURL}/person/${id}/movie_credits?api_key=${apiKey}`
 
 export const image500 = (path) =>
 	path ? `https://image.tmdb.org/t/p/w500${path}` : null
@@ -68,4 +78,12 @@ export const fetchMovieCredits = (id) => {
 
 export const fetchSimilarMovies = (id) => {
 	return apiCall(similarMoviesEndpoint(id))
+}
+
+export const fetchPersonDetails = (id) => {
+	return apiCall(personDetailsEndpoint(id))
+}
+
+export const fetchPersonMovies = (id) => {
+	return apiCall(personMoviesEndpoint(id))
 }
