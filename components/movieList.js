@@ -15,7 +15,6 @@ import { fallbackMoviePoster, image185 } from "../api/moviedb"
 var { width, height } = Dimensions.get("window")
 
 export default function MovieList({ title, data, hideSeeAll }) {
-	let movieName = "Aguante Diegooooooooooooooooooooooo"
 	const navigation = useNavigation()
 
 	return (

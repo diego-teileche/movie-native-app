@@ -22,9 +22,8 @@ var { width, height } = Dimensions.get("window")
 
 export default function SearchScreen() {
 	const navigation = useNavigation()
-	const [results, setResults] = useState([1, 2, 3, 4])
+	const [results, setResults] = useState([])
 	const [loading, setLoading] = useState(false)
-	let movieName = "Diegoooooooooooooooooooooo"
 
 	const handleSearch = (value) => {
 		if (value && value.length > 2) {
@@ -96,7 +95,7 @@ export default function SearchScreen() {
 											style={{ width: width * 0.44, height: height * 0.3 }}
 										/>
 										<Text className="text-neutral-400 ml-1">
-											{item?.title.length > 20
+											{item?.title?.length > 20
 												? item?.title.slice(0, 20) + "..."
 												: item?.title}
 										</Text>
